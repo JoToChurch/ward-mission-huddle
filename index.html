@@ -57,6 +57,10 @@ const STATUS_META = {
   "Follow Up Needed": { color: "#B5533C", bg: "#F5E7E2" },
 };
 const STORAGE_KEY = "wmh-state-v1";
+// Preset recipient for the "Send Reports To" field, so wards don't have to
+// type it in each week. Still editable in the UI if a different address is
+// ever needed for a one-off report.
+const DEFAULT_STAKE_EMAIL = "joey@inxterior.net";
 const uid = () => Math.random().toString(36).slice(2, 10);
 const todayStr = () => new Date().toLocaleDateString(undefined, { weekday: "long", year: "numeric", month: "long", day: "numeric" });
 
@@ -351,7 +355,7 @@ function App() {
   const [history, setHistory] = useState([]);
   const [attendance, setAttendance] = useState({});
   const [ftNotes, setFtNotes] = useState("");
-  const [stakeEmail, setStakeEmail] = useState("");
+  const [stakeEmail, setStakeEmail] = useState(DEFAULT_STAKE_EMAIL);
   const [lastFinishedSummary, setLastFinishedSummary] = useState(null);
   const [tab, setTab] = useState("huddle");
   const [adding, setAdding] = useState(false);
@@ -372,7 +376,7 @@ function App() {
         setHistory(data.history || []);
         setAttendance(data.attendance || {});
         setFtNotes(data.ftNotes || "");
-        setStakeEmail(data.stakeEmail || "");
+        setStakeEmail(data.stakeEmail || DEFAULT_STAKE_EMAIL);
       }
     } catch (e) {
       // no saved state yet, or storage unavailable
