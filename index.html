@@ -66,11 +66,18 @@ const todayStr = () => new Date().toLocaleDateString(undefined, { weekday: "long
 // that ward's tab id (the "gid" you see in the address bar after clicking
 // a tab) so this app can deep-link straight to the right tab. Fill these
 // in as you grab them — right-click each tab in Sheets > "Copy link".
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/1Td3MYEEb7AoHPb9hT4KtAn9X3zFfgkLAwmaJoJevgWI/edit";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/12VZfUjNmntfT839tL4II9g01TFli5qM8h8XIHe7JoV0/edit";
 const WARD_GIDS = {
-  // "La Verkin 1": "123456789",
-  // "La Verkin 2": "123456790",
-  // ...paste the rest here as you collect them
+  "La Verkin 1": "2047669287",
+  "La Verkin 2": "1382138412",
+  "La Verkin 3": "287906777",
+  "La Verkin 4": "599788142",
+  "La Verkin 6": "445203673",
+  "La Verkin 7": "1670442965",
+  "Toquerville 1": "1481697241",
+  "Toquerville 2": "102149643",
+  "Toquerville 3": "1368550612",
+  "Virgin River": "1426579384",
 };
 function sheetLinkFor(ward) {
   const gid = WARD_GIDS[ward];
