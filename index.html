@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Ward Mission Huddle</title>
+<title>Ward Huddle - Missionary</title>
 <link rel="icon" href="data:,">
 <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
@@ -405,7 +405,7 @@ function App() {
   const toggleAttendance = (g) => { setLastFinishedSummary(null); setAttendance(a => ({ ...a, [g]: !a[g] })); };
   const buildSummary = () => {
     const lines = [];
-    lines.push(`WARD MISSION HUDDLE — ${wardName || "Ward"}`);
+    lines.push(`WARD HUDDLE - MISSIONARY — ${wardName || "Ward"}`);
     lines.push(todayStr());
     lines.push("");
     const present = ATTENDANCE_GROUPS.filter(g => attendance[g]);
@@ -452,8 +452,12 @@ function App() {
     setTab("summary");
   };
   const mailtoUrl = (text, dateLabel) => {
-    const subject = `Ward Mission Huddle — ${wardName || "Ward"} — ${dateLabel}`;
-    return `mailto:${encodeURIComponent(stakeEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+    // Opens a Gmail compose window in the browser instead of relying on
+    // mailto:, which hands off to whatever the OS has set as the default
+    // mail app (e.g. Outlook) rather than Gmail specifically. This does
+    // require being signed in to Gmail in the browser tab that opens.
+    const subject = `Ward Huddle - Missionary — ${wardName || "Ward"} — ${dateLabel}`;
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(stakeEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
   };
   const followUpPeople = roster
     .filter(p => p.status !== "Completed" && p.activeStatus !== "Archived")
@@ -476,7 +480,7 @@ function App() {
           Sunday Coordination · CPCS
         </div>
         <div style={{ fontFamily: "'Fraunces', serif", fontSize: 26, fontWeight: 600, lineHeight: 1.15 }}>
-          Ward Mission Huddle
+          Ward Huddle - Missionary
         </div>
         <select
           value={wardName}
@@ -616,12 +620,14 @@ function App() {
               </div>
               <a
                 href={mailtoUrl(displayText, todayStr())}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{ marginTop: 10, width: "100%", background: stakeEmail ? "#B8892B" : "#DDD9CE", color: "#fff", border: "none", borderRadius: 10, padding: "13px", fontWeight: 700, fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, textDecoration: "none", boxSizing: "border-box" }}
               >
-                Review in Mail & Send →
+                Review in Gmail & Send →
               </a>
               <div style={{ fontSize: 11, color: "#6B6A64", marginTop: 6, textAlign: "center" }}>
-                Opens your Mail app with the report ready — you'll do the final send there.
+                Opens Gmail with the report ready — you'll do the final send there.
               </div>
               <button
                 onClick={async () => {
@@ -653,6 +659,8 @@ function App() {
                     <pre style={{ whiteSpace: "pre-wrap", fontSize: 12, color: "#6B6A64", marginTop: 8, fontFamily: "'Inter', sans-serif" }}>{h.text}</pre>
                     <a
                       href={mailtoUrl(h.text, new Date(h.date).toLocaleDateString())}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       style={{ marginTop: 8, fontSize: 12, fontWeight: 700, color: stakeEmail ? "#2F4858" : "#B8B6AC", background: "none", border: "none", display: "inline-block", textDecoration: "none" }}
                     >
                       → Resend this report
